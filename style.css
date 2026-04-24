@@ -1,61 +1,73 @@
 body {
     background-color: #0d0d0d;
-    color: #00ff00;
-    font-family: 'Courier New', Courier, monospace;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    font-family: 'Courier New', Courier, monospace;
 }
 
-.terminal-container {
-    background-color: #1a1a1a;
-    width: 80%;
-    max-width: 600px;
+.terminal-window {
+    background-color: #1c1c1c;
+    width: 90%;
+    max-width: 700px;
     border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
     overflow: hidden;
+    border: 1px solid #333;
 }
 
-.header-bar {
+.terminal-header {
     background-color: #333;
     padding: 10px;
     display: flex;
     align-items: center;
 }
 
+.buttons {
+    display: flex;
+    gap: 8px;
+}
+
 .dot {
     height: 12px;
     width: 12px;
     border-radius: 50%;
-    margin-right: 8px;
 }
 
 .red { background-color: #ff5f56; }
 .yellow { background-color: #ffbd2e; }
 .green { background-color: #27c93f; }
 
-.title-text {
+.header-title {
     color: #bbb;
     font-size: 14px;
-    margin-left: 10px;
+    margin-left: 20px;
+    flex-grow: 1;
+    text-align: center;
 }
 
-.content {
+.terminal-body {
     padding: 20px;
+    color: #00ff00;
+    font-size: 18px;
+    line-height: 1.6;
 }
 
-.command { color: #00ff00; margin-bottom: 5px; }
-.response { color: #ffffff; margin-bottom: 20px; }
+.prompt { color: #00ff00; font-weight: bold; }
+.command { color: #f1f1f1; }
+.response { color: #ffffff; margin-bottom: 20px; margin-left: 10px; }
 
 .cursor {
     display: inline-block;
+    width: 10px;
+    background-color: #00ff00;
     animation: blink 1s infinite;
 }
 
 @keyframes blink {
-    0% { opacity: 0; }
+    0%, 100% { opacity: 0; }
     50% { opacity: 1; }
-    100% { opacity: 0; }
 }
+
