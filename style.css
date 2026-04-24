@@ -40,15 +40,16 @@ body {
     object-fit: cover;
 }
 
-.name { font-family: 'Orbitron', sans-serif; font-size: 28px; letter-spacing: 2px; }
-.tagline { color: var(--neon-blue); letter-spacing: 4px; font-size: 14px; margin: 10px 0; }
+.name { font-family: 'Orbitron', sans-serif; font-size: 28px; letter-spacing: 2px; text-transform: uppercase; }
+.tagline { color: var(--neon-blue); letter-spacing: 4px; font-size: 14px; margin: 10px 0; font-weight: bold; }
+.sub-text { font-style: italic; color: #888; font-size: 14px; }
 
 .btn {
     display: block;
     width: 100%;
     max-width: 300px;
     margin: 15px auto;
-    padding: 12px;
+    padding: 15px;
     background: transparent;
     border: 1px solid var(--neon-blue);
     color: var(--neon-blue);
@@ -69,6 +70,7 @@ body {
     margin-top: 50px;
     letter-spacing: 8px;
     font-family: 'Orbitron', sans-serif;
+    color: var(--neon-blue);
     border-bottom: 2px solid var(--neon-blue);
     display: inline-block;
     padding-bottom: 10px;
@@ -88,5 +90,8 @@ body {
     border-left: 4px solid var(--neon-blue);
     text-align: left;
 }
+
+.tech-box h3 { color: var(--neon-blue); margin: 0 0 10px 0; }
+
 
 
