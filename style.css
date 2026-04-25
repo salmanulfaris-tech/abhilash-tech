@@ -1,0 +1,325 @@
+:root {
+    --bg-color: #050505;
+    --text-color: #00FF41; /* Classic Matrix Green */
+    --text-shadow: 0 0 5px rgba(0, 255, 65, 0.7), 0 0 10px rgba(0, 255, 65, 0.5);
+    --dim-text: rgba(0, 255, 65, 0.6);
+    --border-color: #00FF41;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-mono);
+    line-height: 1.6;
+    overflow-x: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* CRT Effects */
+#crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+    background-size: 100% 4px, 3px 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+#scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 50%,
+        rgba(0, 0, 0, 0.1) 50%,
+        rgba(0, 0, 0, 0.1) 100%
+    );
+    background-size: 100% 4px;
+    z-index: 1001;
+    pointer-events: none;
+    opacity: 0.15;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.97; }
+    5% { opacity: 0.95; }
+    10% { opacity: 0.9; }
+    15% { opacity: 0.95; }
+    20% { opacity: 0.98; }
+    25% { opacity: 0.95; }
+    30% { opacity: 0.99; }
+    35% { opacity: 0.95; }
+    40% { opacity: 0.94; }
+    45% { opacity: 0.97; }
+    50% { opacity: 0.98; }
+    55% { opacity: 0.95; }
+    60% { opacity: 0.99; }
+    65% { opacity: 0.96; }
+    70% { opacity: 0.98; }
+    75% { opacity: 0.94; }
+    80% { opacity: 0.99; }
+    85% { opacity: 0.96; }
+    90% { opacity: 0.98; }
+    95% { opacity: 0.95; }
+    100% { opacity: 0.98; }
+}
+
+body::after {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0;
+    z-index: 1002;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+}
+
+/* Boot Screen */
+#boot-container {
+    padding: 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#boot-log {
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.log-line {
+    margin-bottom: 2px;
+}
+
+.log-line.success { color: #55FF55; }
+.log-line.warn { color: #FFFF55; }
+.log-line.error { color: #FF5555; }
+
+/* Main Terminal */
+#terminal {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#terminal-header {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    text-shadow: var(--text-shadow);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.terminal-logo {
+    height: 40px;
+    width: 40px;
+    filter: drop-shadow(0 0 5px var(--text-color));
+}
+
+.command-line {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.prompt {
+    color: var(--dim-text);
+}
+
+.command {
+    font-weight: bold;
+}
+
+.response {
+    padding-left: 20px;
+    border-left: 1px solid rgba(0, 255, 65, 0.2);
+    margin-bottom: 40px;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 0;
+    text-shadow: var(--text-shadow);
+    letter-spacing: 5px;
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: var(--dim-text);
+    margin-bottom: 20px;
+}
+
+.bio {
+    max-width: 600px;
+    font-size: 1.1rem;
+}
+
+/* Grid for Skills */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.skill-category h3 {
+    margin-bottom: 15px;
+    color: #FFF;
+    background: rgba(0, 255, 65, 0.2);
+    padding: 5px 10px;
+    display: inline-block;
+}
+
+.skill-category ul {
+    list-style: none;
+}
+
+.skill-category li {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.skill-category i {
+    width: 20px;
+    color: var(--dim-text);
+}
+
+/* Jobs */
+.job {
+    margin-bottom: 20px;
+}
+
+.year {
+    color: #FFF;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.job h4 {
+    margin: 5px 0;
+}
+
+/* Contact */
+.contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contact-item {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    text-shadow: var(--text-shadow);
+    padding-left: 10px;
+}
+
+/* Footer */
+#terminal-footer {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px dashed var(--dim-text);
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--dim-text);
+}
+
+/* Animations */
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+.cursor {
+    display: inline-block;
+    width: 10px;
+    height: 20px;
+    background: var(--text-color);
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+}
+
+/* Glitch Effect */
+.glitch-text {
+    position: relative;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+}
+
+.glitch-text::before {
+    color: #f0f;
+    z-index: -1;
+    animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+}
+
+.glitch-text::after {
+    color: #0ff;
+    z-index: -2;
+    animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-3px, 3px); }
+    40% { transform: translate(-3px, -3px); }
+    60% { transform: translate(3px, 3px); }
+    80% { transform: translate(3px, -3px); }
+    100% { transform: translate(0); }
+}
+
+@media (max-width: 600px) {
+    h1 { font-size: 2rem; }
+    .grid { grid-template-columns: 1fr; }
+}
