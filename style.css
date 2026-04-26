@@ -1,10 +1,15 @@
 :root {
-    --bg-color: #050505;
-    --text-color: #00FF41; /* Classic Matrix Green */
-    --text-shadow: 0 0 5px rgba(0, 255, 65, 0.7), 0 0 10px rgba(0, 255, 65, 0.5);
-    --dim-text: rgba(0, 255, 65, 0.6);
-    --border-color: #00FF41;
+    --board-bg: #1a1c1e; /* Dark matte grey */
+    --trace-color: #b87333; /* Copper */
+    --trace-dim: rgba(184, 115, 51, 0.15);
+    --chip-body: #111111;
+    --chip-edge: #2a2a2a;
+    --pin-color: #c0c0c0; /* Silver */
+    --silkscreen-text: #e0e0e0;
+    --silkscreen-dim: #a0a0a0;
+    --led-green: #00ff41;
     --font-mono: 'JetBrains Mono', monospace;
+    --font-sans: 'Inter', sans-serif;
 }
 
 * {
@@ -14,312 +19,370 @@
 }
 
 body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    font-family: var(--font-mono);
-    line-height: 1.6;
+    background-color: #000;
+    color: var(--silkscreen-text);
+    font-family: var(--font-sans);
     overflow-x: hidden;
-    height: 100vh;
-    width: 100vw;
+    min-height: 100vh;
 }
 
-/* CRT Effects */
-#crt-overlay {
+/* BIOS Screen */
+#bios-screen {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
-                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-    background-size: 100% 4px, 3px 100%;
-    pointer-events: none;
-    z-index: 1000;
-}
-
-#scanlines {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0) 50%,
-        rgba(0, 0, 0, 0.1) 50%,
-        rgba(0, 0, 0, 0.1) 100%
-    );
-    background-size: 100% 4px;
-    z-index: 1001;
-    pointer-events: none;
-    opacity: 0.15;
-}
-
-@keyframes flicker {
-    0% { opacity: 0.97; }
-    5% { opacity: 0.95; }
-    10% { opacity: 0.9; }
-    15% { opacity: 0.95; }
-    20% { opacity: 0.98; }
-    25% { opacity: 0.95; }
-    30% { opacity: 0.99; }
-    35% { opacity: 0.95; }
-    40% { opacity: 0.94; }
-    45% { opacity: 0.97; }
-    50% { opacity: 0.98; }
-    55% { opacity: 0.95; }
-    60% { opacity: 0.99; }
-    65% { opacity: 0.96; }
-    70% { opacity: 0.98; }
-    75% { opacity: 0.94; }
-    80% { opacity: 0.99; }
-    85% { opacity: 0.96; }
-    90% { opacity: 0.98; }
-    95% { opacity: 0.95; }
-    100% { opacity: 0.98; }
-}
-
-body::after {
-    content: " ";
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: rgba(18, 16, 16, 0.1);
-    opacity: 0;
-    z-index: 1002;
-    pointer-events: none;
-    animation: flicker 0.15s infinite;
-}
-
-/* Boot Screen */
-#boot-container {
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #000;
+    color: #e0e0e0;
+    font-family: var(--font-mono);
     padding: 20px;
-    height: 100vh;
+    z-index: 9999;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+}
+
+#bios-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-out;
 }
 
 #boot-log {
     white-space: pre-wrap;
     word-break: break-all;
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 .log-line {
     margin-bottom: 2px;
 }
+.log-line.success { color: var(--led-green); }
+.log-line.warn { color: #f39c12; }
+.log-line.error { color: #e74c3c; }
 
-.log-line.success { color: #55FF55; }
-.log-line.warn { color: #FFFF55; }
-.log-line.error { color: #FF5555; }
-
-/* Main Terminal */
-#terminal {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.hidden {
-    display: none !important;
-}
-
-#terminal-header {
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: bold;
-    text-shadow: var(--text-shadow);
-}
-
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.terminal-logo {
-    height: 40px;
-    width: 40px;
-    filter: drop-shadow(0 0 5px var(--text-color));
-}
-
-.command-line {
-    margin-top: 30px;
-    margin-bottom: 10px;
-    display: flex;
-    gap: 10px;
-}
-
-.prompt {
-    color: var(--dim-text);
-}
-
-.command {
-    font-weight: bold;
-}
-
-.response {
-    padding-left: 20px;
-    border-left: 1px solid rgba(0, 255, 65, 0.2);
-    margin-bottom: 40px;
-}
-
-h1 {
-    font-size: 3rem;
-    margin-bottom: 0;
-    text-shadow: var(--text-shadow);
-    letter-spacing: 5px;
-}
-
-.subtitle {
-    font-size: 1rem;
-    color: var(--dim-text);
-    margin-bottom: 20px;
-}
-
-.bio {
-    max-width: 600px;
-    font-size: 1.1rem;
-}
-
-/* Grid for Skills */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-}
-
-.skill-category h3 {
-    margin-bottom: 15px;
-    color: #FFF;
-    background: rgba(0, 255, 65, 0.2);
-    padding: 5px 10px;
-    display: inline-block;
-}
-
-.skill-category ul {
-    list-style: none;
-}
-
-.skill-category li {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.skill-category i {
-    width: 20px;
-    color: var(--dim-text);
-}
-
-/* Jobs */
-.job {
-    margin-bottom: 20px;
-}
-
-.year {
-    color: #FFF;
-    font-weight: bold;
-    font-size: 0.9rem;
-}
-
-.job h4 {
-    margin: 5px 0;
-}
-
-/* Contact */
-.contact-links {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.contact-item {
-    color: var(--text-color);
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.contact-item:hover {
-    text-shadow: var(--text-shadow);
-    padding-left: 10px;
-}
-
-/* Footer */
-#terminal-footer {
-    margin-top: auto;
-    padding-top: 20px;
-    border-top: 1px dashed var(--dim-text);
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8rem;
-    color: var(--dim-text);
-}
-
-/* Animations */
-@keyframes blink {
-    50% { opacity: 0; }
-}
-
-.cursor {
-    display: inline-block;
-    width: 10px;
-    height: 20px;
-    background: var(--text-color);
-    animation: blink 1s step-end infinite;
-    vertical-align: middle;
-}
-
-/* Glitch Effect */
-.glitch-text {
+/* Motherboard Layout */
+#motherboard {
     position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--board-bg);
+    background-image: 
+        radial-gradient(var(--trace-dim) 1px, transparent 1px),
+        linear-gradient(to right, var(--trace-dim) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--trace-dim) 1px, transparent 1px);
+    background-size: 20px 20px, 100px 100px, 100px 100px;
+    background-position: center;
+    padding: 40px 20px;
+    transition: opacity 1s ease-in;
+    opacity: 1;
 }
 
-.glitch-text::before,
-.glitch-text::after {
-    content: attr(data-text);
+#motherboard.hidden {
+    display: none;
+    opacity: 0;
+}
+
+/* Decorative PCB Traces */
+.pcb-traces {
     position: absolute;
-    top: 0;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.3;
+}
+
+.pcb-traces::before, .pcb-traces::after {
+    content: '';
+    position: absolute;
+    background: transparent;
+}
+.pcb-traces::before {
+    top: 10%; left: 10%; width: 30%; height: 40%;
+    border-top: 3px solid var(--trace-color);
+    border-right: 3px solid var(--trace-color);
+}
+.pcb-traces::after {
+    bottom: 20%; right: 10%; width: 40%; height: 30%;
+    border-bottom: 3px solid var(--trace-color);
+    border-left: 3px solid var(--trace-color);
+}
+
+.board-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(min-content, max-content);
+    gap: 40px;
+    padding: 20px 0;
+}
+
+/* Microchip Components */
+.microchip {
+    background: var(--chip-body);
+    border: 1px solid var(--chip-edge);
+    border-radius: 4px;
+    position: relative;
+    box-shadow: 
+        inset 0 0 10px rgba(255,255,255,0.05),
+        0 10px 20px rgba(0,0,0,0.5),
+        0 0 0 1px #000;
+    padding: 30px;
+    color: var(--silkscreen-text);
+}
+
+/* Metallic Pins */
+.microchip::before, .microchip::after {
+    content: '';
+    position: absolute;
+    background-image: repeating-linear-gradient(
+        to right,
+        var(--pin-color),
+        var(--pin-color) 4px,
+        transparent 4px,
+        transparent 10px
+    );
+}
+
+/* Horizontal chips (CPU, Storage) - Pins on top and bottom */
+.cpu-chip, .rom-chip {
+    grid-column: span 12;
+}
+
+.cpu-chip::before, .rom-chip::before {
+    top: -8px; left: 20px; right: 20px; height: 8px;
+}
+.cpu-chip::after, .rom-chip::after {
+    bottom: -8px; left: 20px; right: 20px; height: 8px;
+}
+
+/* Vertical / Other chips - Pins on left and right */
+.ram-chip, .io-chip {
+    grid-column: span 6;
+}
+
+.ram-chip::before, .io-chip::before {
+    top: 20px; bottom: 20px; left: -8px; width: 8px;
+    background-image: repeating-linear-gradient(
+        to bottom,
+        var(--pin-color),
+        var(--pin-color) 4px,
+        transparent 4px,
+        transparent 10px
+    );
+}
+.ram-chip::after, .io-chip::after {
+    top: 20px; bottom: 20px; right: -8px; width: 8px;
+    background-image: repeating-linear-gradient(
+        to bottom,
+        var(--pin-color),
+        var(--pin-color) 4px,
+        transparent 4px,
+        transparent 10px
+    );
+}
+
+@media (max-width: 900px) {
+    .ram-chip, .io-chip {
+        grid-column: span 12;
+    }
+}
+
+/* Typography & Content within Chips */
+.chip-label {
+    position: absolute;
+    top: -25px;
     left: 0;
-    width: 100%;
-    height: 100%;
+    color: var(--silkscreen-text);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.chip-content {
+    font-family: var(--font-sans);
+}
+
+.chip-content h1, .chip-content h2, .chip-content h3, .chip-content h4 {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cpu-chip .part-number {
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.cpu-chip .chip-desc {
+    font-size: 1rem;
+    color: var(--trace-color);
+    margin-bottom: 15px;
+}
+
+.cpu-chip .chip-specs {
+    font-size: 0.9rem;
+    color: var(--silkscreen-dim);
+    line-height: 1.6;
+}
+
+.chip-logo {
+    width: 60px;
+    height: auto;
+    margin-bottom: 15px;
+    filter: grayscale(100%) brightness(200%);
     opacity: 0.8;
 }
 
-.glitch-text::before {
-    color: #f0f;
-    z-index: -1;
-    animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+/* Skills/RAM section */
+.ram-chip h3, .rom-chip h3, .io-chip h3 {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    border-bottom: 1px dashed var(--silkscreen-dim);
+    padding-bottom: 10px;
 }
 
-.glitch-text::after {
-    color: #0ff;
-    z-index: -2;
-    animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
-}
-
-@keyframes glitch {
-    0% { transform: translate(0); }
-    20% { transform: translate(-3px, 3px); }
-    40% { transform: translate(-3px, -3px); }
-    60% { transform: translate(3px, 3px); }
-    80% { transform: translate(3px, -3px); }
-    100% { transform: translate(0); }
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
 @media (max-width: 600px) {
-    h1 { font-size: 2rem; }
-    .grid { grid-template-columns: 1fr; }
+    .grid-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.skill-module h4 {
+    color: var(--silkscreen-text);
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+}
+
+.skill-module ul {
+    list-style: none;
+}
+
+.skill-module li {
+    font-size: 0.9rem;
+    color: var(--silkscreen-dim);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.skill-module i {
+    color: var(--trace-color);
+    width: 16px;
+    text-align: center;
+}
+
+/* Experience / ROM section */
+.history-record {
+    margin-bottom: 20px;
+}
+.history-record:last-child {
+    margin-bottom: 0;
+}
+
+.timestamp {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--trace-color);
+    display: block;
+    margin-bottom: 5px;
+}
+
+.history-record h4 {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.history-record p {
+    font-size: 0.9rem;
+    color: var(--silkscreen-dim);
+    line-height: 1.5;
+}
+
+/* Contact / IO section */
+.contact-ports {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.port {
+    font-family: var(--font-mono);
+    color: var(--silkscreen-dim);
+    text-decoration: none;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: color 0.3s;
+}
+
+.port:hover {
+    color: var(--trace-color);
+}
+
+.port i {
+    font-size: 1.2rem;
+}
+
+/* SMD Components and LEDs */
+.smd-capacitor, .smd-resistor {
+    position: absolute;
+    background: #deb887; /* Ceramic capacitor color */
+    border-left: 2px solid silver;
+    border-right: 2px solid silver;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    z-index: 1;
+}
+
+.smd-resistor {
+    background: #111;
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.smd-1 { top: -20px; left: 10%; width: 12px; height: 8px; }
+.smd-2 { top: 50%; right: -30px; width: 8px; height: 12px; border-left: none; border-right: none; border-top: 2px solid silver; border-bottom: 2px solid silver; }
+.smd-3 { bottom: -25px; left: 20%; width: 16px; height: 10px; }
+.smd-4 { top: 30%; left: -30px; width: 10px; height: 16px; border-left: none; border-right: none; border-top: 2px solid silver; border-bottom: 2px solid silver; font-size: 6px; transform: rotate(90deg); }
+
+/* Status LED */
+.status-led {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--silkscreen-dim);
+}
+
+.led-light {
+    width: 8px;
+    height: 8px;
+    background-color: var(--led-green);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--led-green);
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+    0%, 96%, 98% { opacity: 1; }
+    97%, 99% { opacity: 0; }
 }
