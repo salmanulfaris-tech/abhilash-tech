@@ -229,6 +229,37 @@ body {
     line-height: 1.6;
 }
 
+/* Download Button */
+.btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 25px;
+    padding: 10px 20px;
+    background: var(--chip-body);
+    border: 1px solid var(--trace-color);
+    color: var(--trace-color);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 3px;
+    box-shadow: 0 0 5px var(--trace-dim), inset 0 0 5px rgba(255,255,255,0.02);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-download:hover {
+    background: var(--trace-dim);
+    color: #fff;
+    border-color: #fff;
+    box-shadow: 0 0 15px var(--trace-color);
+}
+
 .chip-logo {
     width: 60px;
     height: auto;
