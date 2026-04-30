@@ -1,23 +1,28 @@
 const bootLog = document.getElementById('boot-log');
-const bootContainer = document.getElementById('boot-container');
-const terminal = document.getElementById('terminal');
-const systemTime = document.getElementById('system-time');
+const biosScreen = document.getElementById('bios-screen');
+const motherboard = document.getElementById('motherboard');
 
 const bootSequence = [
-    { text: "BIOS V4.0.1 (C) 2026 ABHILASH TECH SYSTEMS", delay: 100 },
-    { text: "CPU: OCTA-CORE HARDWARE DIAGNOSTIC ENGINE @ 4.2GHz", delay: 150 },
-    { text: "MEMORY: 32768MB OK", delay: 200 },
-    { text: "CHECKING PERIPHERALS...", delay: 400 },
-    { text: "  -> USB CONTROLLER [READY]", delay: 100, type: "success" },
-    { text: "  -> GPU ACCELERATOR [READY]", delay: 100, type: "success" },
-    { text: "  -> MICRO-SOLDERING STATION [LINKED]", delay: 300, type: "success" },
-    { text: "  -> THERMAL CAMERA INTERFACE [CONNECTED]", delay: 200, type: "success" },
-    { text: "INITIALIZING CHIP-LEVEL OS...", delay: 500 },
-    { text: "MOUNTING /DEV/EXPERIENCE...", delay: 300 },
-    { text: "MOUNTING /DEV/SKILLS...", delay: 200 },
-    { text: "SYSTEM CHECK: PASSED", delay: 400, type: "success" },
-    { text: "LOADING USER PROFILE: ABHILASH_S", delay: 200 },
-    { text: "READY.", delay: 500, type: "success" }
+    { text: "BIOS Date 04/26/26 18:35:00 Ver 08.00.15", delay: 10 },
+    { text: "CPU: ABHILASH_S HARDWARE DIAGNOSTIC ENGINE @ 4.2GHz", delay: 10 },
+    { text: "Speed : 4.20 GHz", delay: 10 },
+    { text: "Press DEL to run Setup", delay: 10 },
+    { text: "Press F8 for BBS POPUP", delay: 10 },
+    { text: " ", delay: 10 },
+    { text: "Memory Check: 32768MB OK", delay: 10 },
+    { text: "Initializing USB Controllers .. Done.", delay: 10, type: "success" },
+    { text: "Checking NVRAM..", delay: 10 },
+    { text: "Update OK!", delay: 10, type: "success" },
+    { text: " ", delay: 10 },
+    { text: "Auto-Detecting Micro-Soldering Station.. Found.", delay: 10 },
+    { text: "Auto-Detecting Thermal Camera.. Found.", delay: 10 },
+    { text: " ", delay: 10 },
+    { text: "Hardware Monitor Status:", delay: 10 },
+    { text: "  -> CPU VCore: 1.25V  [OK]", delay: 10, type: "success" },
+    { text: "  -> System Temp: 32C  [OK]", delay: 10, type: "success" },
+    { text: " ", delay: 10 },
+    { text: "SYSTEM CHECK: PASSED", delay: 20, type: "success" },
+    { text: "BOOTING FROM PRIMARY HARDWARE COMPONENT...", delay: 50 }
 ];
 
 async function runBootSequence() {
@@ -26,34 +31,26 @@ async function runBootSequence() {
         div.className = `log-line ${line.type || ''}`;
         bootLog.appendChild(div);
         
-        // Typing effect for each line
         await typeWriter(div, line.text);
         await new Promise(resolve => setTimeout(resolve, line.delay));
     }
 
-    // Transition to terminal
+    // Transition to Motherboard Layout
     setTimeout(() => {
-        bootContainer.classList.add('hidden');
-        terminal.classList.remove('hidden');
-        updateTime();
-        setInterval(updateTime, 1000);
-    }, 1000);
+        biosScreen.classList.add('hidden');
+        motherboard.classList.remove('hidden');
+    }, 100);
 }
 
 function typeWriter(element, text, i = 0) {
     return new Promise(resolve => {
         if (i < text.length) {
             element.textContent += text.charAt(i);
-            setTimeout(() => typeWriter(element, text, i + 1).then(resolve), 20);
+            setTimeout(() => typeWriter(element, text, i + 1).then(resolve), 2);
         } else {
             resolve();
         }
     });
-}
-
-function updateTime() {
-    const now = new Date();
-    systemTime.textContent = now.toLocaleTimeString('en-US', { hour12: false });
 }
 
 // Start sequence

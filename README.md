@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Abhilash S - Terminal Resume
 
 A premium, terminal-themed resume website for Abhilash S, a Laptop and Mobile Chip-level Technician.
@@ -18,3 +19,6 @@ This site is designed to be hosted on GitHub Pages.
 
 ---
 Created by Antigravity AI.
+=======
+# abhilash-tech
+>>>>>>> 1ab20c631ca34c49f1b5fdf8af1ea2792b1172c2

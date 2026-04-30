@@ -3,113 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abhilash S | Chip-Level Technician | Terminal</title>
-    <meta name="description" content="Portfolio of Abhilash S, an expert in Laptop and Mobile Chip-level Repair.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>Abhilash S | Hardware Technician</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="crt-overlay"></div>
-    <div id="scanlines"></div>
-
-    <div id="boot-container">
+    <div id="bios-screen">
         <div id="boot-log"></div>
     </div>
 
-    <main id="terminal" class="hidden">
-        <header id="terminal-header">
-            <div class="header-left">
-                <img src="logo.png" alt="Logo" class="terminal-logo">
-                <span class="header-item">SYSTEM: ABHILASH_S_V2.0</span>
-            </div>
-            <span class="header-item" id="system-time"></span>
-        </header>
+    <div id="motherboard" class="hidden">
+        <div class="pcb-traces"></div>
         
-        <div id="content">
-            <section id="hero">
-                <div class="command-line">
-                    <span class="prompt">root@abhilash:~$</span>
-                    <span class="command">whoami</span>
-                </div>
-                <div class="response">
-                    <h1 class="glitch-text" data-text="ABHILASH S">ABHILASH S</h1>
-                    <p class="subtitle">ADVANCED CHIP-LEVEL TECHNICIAN | HARDWARE ARCHITECT</p>
-                    <p class="bio">
+        <div class="board-container">
+            <!-- CPU (Hero Section) -->
+            <section class="microchip cpu-chip" id="cpu-core">
+                <div class="chip-label">U1</div>
+                <div class="chip-content">
+                    <img src="logo.png" alt="Logo" class="chip-logo" onerror="this.style.display='none'">
+                    <h1 class="part-number">ABHILASH S</h1>
+                    <h2 class="chip-desc">HARDWARE TECHNICIAN & CHIP-LEVEL TECHNICIAN</h2>
+                    <p class="chip-specs">
+                        VCC: 3.3V | FREQ: HIGH-SPEED | TECH: x86/ARM/BGA
+                        <br><br>
                         Specializing in microscopic surgical repair of high-density PCB boards. 
-                        Solving complex hardware failures where others see dead ends.
+                        Restoring Technology from the Silicon Up.
                     </p>
+                    <a href="resume.pdf" class="btn-download" download>
+                        <i class="fa-solid fa-download"></i> DOWNLOAD_RESUME.EXE
+                    </a>
                 </div>
             </section>
 
-            <section id="skills">
-                <div class="command-line">
-                    <span class="prompt">root@abhilash:~$</span>
-                    <span class="command">ls --skills --hardware</span>
-                </div>
-                <div class="response grid">
-                    <div class="skill-category">
-                        <h3>[ MOBILE ARCHITECTURE ]</h3>
-                        <ul>
-                            <li><i class="fa-solid fa-microchip"></i> IC Reballing & Replacement</li>
-                            <li><i class="fa-solid fa-bolt"></i> Power Management Circuitry</li>
-                            <li><i class="fa-solid fa-display"></i> OLED/AMOLED FPC Repair</li>
-                            <li><i class="fa-solid fa-signal"></i> RF Baseband Troubleshooting</li>
-                        </ul>
-                    </div>
-                    <div class="skill-category">
-                        <h3>[ LAPTOP CHIP-LEVEL ]</h3>
-                        <ul>
-                            <li><i class="fa-solid fa-plug"></i> DC Jack & Charging Circuitry</li>
-                            <li><i class="fa-solid fa-memory"></i> RAM/GPU BGA Rework</li>
-                            <li><i class="fa-solid fa-code"></i> BIOS/EC Firmware Programming</li>
-                            <li><i class="fa-solid fa-droplet-slash"></i> Liquid Damage Restoration</li>
-                        </ul>
+            <!-- Memory / Skills -->
+            <section class="microchip ram-chip" id="memory-bank">
+                <div class="chip-label">U2</div>
+                <div class="chip-content">
+                    <h3>[ TECH_LAB_CAPABILITIES ]</h3>
+                    <div class="grid-layout">
+                        <div class="skill-module">
+                            <h4>> MOBILE_BOARD</h4>
+                            <ul>
+                                <li><i class="fa-solid fa-microchip"></i> IC Reballing & Replacement</li>
+                                <li><i class="fa-solid fa-bolt"></i> Power Management Circuitry</li>
+                                <li><i class="fa-solid fa-display"></i> OLED/AMOLED FPC Repair</li>
+                                <li><i class="fa-solid fa-signal"></i> RF Baseband Troubleshooting</li>
+                            </ul>
+                        </div>
+                        <div class="skill-module">
+                            <h4>> LAPTOP_BOARD</h4>
+                            <ul>
+                                <li><i class="fa-solid fa-plug"></i> DC Jack & Charging Circuitry</li>
+                                <li><i class="fa-solid fa-memory"></i> Chip Level Service</li>
+                                <li><i class="fa-solid fa-code"></i> BIOS/EC Firmware Programming</li>
+                                <li><i class="fa-solid fa-droplet-slash"></i> Liquid Damage Restoration</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section id="experience">
-                <div class="command-line">
-                    <span class="prompt">root@abhilash:~$</span>
-                    <span class="command">history --work</span>
-                </div>
-                <div class="response">
-                    <div class="job">
-                        <span class="year">2021 - PRESENT</span>
+            <!-- Experience / Storage -->
+            <section class="microchip rom-chip" id="storage-module">
+                <div class="chip-label">U3</div>
+                <div class="chip-content">
+                    <h3>[ SYSTEM_HISTORY_LOG ]</h3>
+                    <div class="history-record">
+                        <span class="timestamp">0x2023 - PRESENT</span>
                         <h4>SENIOR CHIP-LEVEL TECHNICIAN</h4>
                         <p>Leading diagnostic operations for high-end gaming laptops and flagship mobile devices.</p>
                     </div>
-                    <div class="job">
-                        <span class="year">2018 - 2021</span>
+                    <div class="history-record">
+                        <span class="timestamp">0x2023 - PRESENT</span>
                         <h4>HARDWARE REPAIR SPECIALIST</h4>
                         <p>Focused on PCB level troubleshooting and component replacement for multi-brand devices.</p>
                     </div>
                 </div>
             </section>
 
-            <section id="contact">
-                <div class="command-line">
-                    <span class="prompt">root@abhilash:~$</span>
-                    <span class="command">contact --info</span>
-                </div>
-                <div class="response">
-                    <div class="contact-links">
-                        <a href="tel:+91XXXXXXXXXX" class="contact-item"><i class="fa-solid fa-phone"></i> +91-XXXX-XXXXXX</a>
-                        <a href="mailto:abhilash@example.com" class="contact-item"><i class="fa-solid fa-envelope"></i> abhilash@tech.com</a>
-                        <span class="contact-item"><i class="fa-solid fa-location-dot"></i> Kerala, India</span>
+            <!-- Contact / I/O Controller -->
+            <section class="microchip io-chip" id="io-controller">
+                <div class="chip-label">U4</div>
+                <div class="chip-content">
+                    <h3>[ I/O_INTERFACE ]</h3>
+                    <div class="contact-ports">
+                        <a href="tel:+919778543507" class="port"><i class="fa-solid fa-phone"></i> COM1: +91-9778543507</a>
+                        <a href="mailto:abhilashsadan405@gmail.com" class="port"><i class="fa-solid fa-envelope"></i> abhilashsadan405@gmail.com</a>
+                        <span class="port"><i class="fa-solid fa-location-dot"></i> LOC: Kerala, India</span>
                     </div>
                 </div>
             </section>
+            
+            <!-- Small SMD Components for aesthetic -->
+            <div class="smd-capacitor smd-1"></div>
+            <div class="smd-capacitor smd-2"></div>
+            <div class="smd-resistor smd-3">102</div>
+            <div class="smd-resistor smd-4">4R7</div>
+            
+            <!-- LED Indicator -->
+            <div class="status-led">
+                <span class="led-light"></span>
+                <span class="led-label">PWR_GOOD</span>
+            </div>
         </div>
-
-        <footer id="terminal-footer">
-            <span class="status">STATUS: ONLINE</span>
-            <span class="cursor-pos">Line 42, Col 1</span>
-        </footer>
-    </main>
+    </div>
 
     <script src="script.js"></script>
 </body>
